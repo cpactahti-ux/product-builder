@@ -32,14 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return { main: mainNumbers, bonus: bonus };
     }
 
-    // Display "Latest Results" (MOCKED for the session date 2026-05-10)
+    // Display "Latest Results" (Updated with Draw #1223 actual numbers)
     function displayLatestResults() {
         if (!winningNumbersContainer || !winningBonusContainer) return;
         
-        // Mocked latest results for the current "future" date
+        // Accurate latest results for Draw #1223 (2026-05-09)
         const latest = {
-            main: [3, 11, 24, 31, 39, 42],
-            bonus: 7
+            main: [16, 18, 20, 32, 33, 39],
+            bonus: 26
         };
 
         winningNumbersContainer.innerHTML = '';
