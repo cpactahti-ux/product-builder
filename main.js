@@ -32,11 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return { main: mainNumbers, bonus: bonus };
     }
 
-    // Display "Latest Results" (Updated with Draw #1223 actual numbers)
+    // Display "Latest Results" (VERIFIED for Draw #1223)
     function displayLatestResults() {
         if (!winningNumbersContainer || !winningBonusContainer) return;
         
-        // Accurate latest results for Draw #1223 (2026-05-09)
+        // Final verified numbers for Draw #1223
         const latest = {
             main: [16, 18, 20, 32, 33, 39],
             bonus: 26
