@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lotto Gold Premium</title>
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="style.css?v=1.2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700&display=swap" rel="stylesheet">
@@ -16,38 +16,60 @@
         </button>
     </div>
 
-    <div class="container">
-        <header>
-            <h1 class="glow-text">Lotto Gold</h1>
-            <p class="subtitle">Experience the future of fortune</p>
-        </header>
+    <div class="main-layout">
+        <!-- Generator Section -->
+        <div class="container">
+            <header>
+                <h1 class="glow-text">Lotto Gold</h1>
+                <p class="subtitle">Experience the future of fortune</p>
+            </header>
 
-        <div class="selector-card">
-            <p class="selector-label">How many sets do you need?</p>
-            <div class="segmented-control">
-                <input type="radio" name="sets" value="1" id="set-1">
-                <label for="set-1">1 Set</label>
-                
-                <input type="radio" name="sets" value="3" id="set-3" checked>
-                <label for="set-3">3 Sets</label>
-                
-                <input type="radio" name="sets" value="5" id="set-5">
-                <label for="set-5">5 Sets</label>
+            <div class="selector-card">
+                <p class="selector-label">How many sets do you need?</p>
+                <div class="segmented-control">
+                    <input type="radio" name="sets" value="1" id="set-1">
+                    <label for="set-1">1 Set</label>
+                    
+                    <input type="radio" name="sets" value="3" id="set-3" checked>
+                    <label for="set-3">3 Sets</label>
+                    
+                    <input type="radio" name="sets" value="5" id="set-5">
+                    <label for="set-5">5 Sets</label>
+                </div>
+            </div>
+
+            <div id="sets-wrapper">
+                <div class="placeholder-card">
+                    <p>Choose your sets and reveal your luck</p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="generate-btn" class="primary-btn">
+                    <span class="btn-text">Reveal Numbers</span>
+                </button>
             </div>
         </div>
 
-        <div id="sets-wrapper">
-            <div class="placeholder-card">
-                <p>Choose your sets and reveal your luck</p>
+        <!-- Latest Results Section -->
+        <aside class="results-sidebar">
+            <div class="results-card">
+                <div class="results-header">
+                    <h2>Latest Results</h2>
+                    <span id="draw-number" class="badge">#1223</span>
+                </div>
+                <p class="draw-date" id="draw-date">May 09, 2026</p>
+                <div class="winning-numbers" id="winning-numbers">
+                    <!-- Winning numbers will be here -->
+                </div>
+                <div class="bonus-section">
+                    <span>Bonus</span>
+                    <div id="winning-bonus" class="ball bonus small"></div>
+                </div>
             </div>
-        </div>
-
-        <div class="controls">
-            <button id="generate-btn" class="primary-btn">
-                <span class="btn-text">Reveal Numbers</span>
-            </button>
-        </div>
+        </aside>
     </div>
-    <script src="main.js?v=1.1"></script>
+
+    <script src="main.js?v=1.2"></script>
 </body>
 </html>

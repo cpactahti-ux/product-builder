@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-btn');
     const themeIcon = document.getElementById('theme-icon');
     const body = document.body;
+    
+    // Results elements
+    const winningNumbersContainer = document.getElementById('winning-numbers');
+    const winningBonusContainer = document.getElementById('winning-bonus');
 
     if (!generateBtn || !themeBtn) return;
 
@@ -16,20 +20,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function generateLottoNumbers() {
         const numbers = [];
-        // Generate 6 unique numbers
         while (numbers.length < 6) {
             const n = Math.floor(Math.random() * 45) + 1;
             if (!numbers.includes(n)) numbers.push(n);
         }
         const mainNumbers = numbers.sort((a, b) => a - b);
-        
-        // Generate 1 unique bonus number
         let bonus;
         do {
             bonus = Math.floor(Math.random() * 45) + 1;
         } while (mainNumbers.includes(bonus));
-        
         return { main: mainNumbers, bonus: bonus };
+    }
+
+    // Display "Latest Results" (MOCKED for the session date 2026-05-10)
+    function displayLatestResults() {
+        if (!winningNumbersContainer || !winningBonusContainer) return;
+        
+        // Mocked latest results for the current "future" date
+        const latest = {
+            main: [3, 11, 24, 31, 39, 42],
+            bonus: 7
+        };
+
+        winningNumbersContainer.innerHTML = '';
+        latest.main.forEach((num, idx) => {
+            const ball = document.createElement('div');
+            ball.className = 'ball small';
+            ball.textContent = num;
+            ball.style.animationDelay = (idx * 0.1) + 's';
+            winningNumbersContainer.appendChild(ball);
+        });
+        
+        winningBonusContainer.textContent = latest.bonus;
     }
 
     function createSetElement(setIndex) {
@@ -38,11 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setDiv.style.animationDelay = (setIndex * 0.1) + 's';
         
         const result = generateLottoNumbers();
-        const main = result.main;
-        const bonus = result.bonus;
         
-        // Render Main Numbers
-        main.forEach((num, idx) => {
+        result.main.forEach((num, idx) => {
             const ball = document.createElement('div');
             ball.className = 'ball';
             ball.textContent = num;
@@ -50,16 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
             setDiv.appendChild(ball);
         });
 
-        // Add Plus Sign
         const plus = document.createElement('div');
         plus.className = 'plus-sign';
         plus.textContent = '+';
         setDiv.appendChild(plus);
 
-        // Render Bonus Number
         const bonusBall = document.createElement('div');
         bonusBall.className = 'ball bonus';
-        bonusBall.textContent = bonus;
+        bonusBall.textContent = result.bonus;
         bonusBall.style.animationDelay = ((setIndex * 0.1) + (6 * 0.05)) + 's';
         setDiv.appendChild(bonusBall);
         
@@ -87,10 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
     generateBtn.onclick = () => {
         const btnText = generateBtn.querySelector('.btn-text');
         if (btnText) btnText.textContent = 'Revealing...';
-        
         setTimeout(() => {
             if (btnText) btnText.textContent = 'Reveal Numbers';
             displaySets();
         }, 200);
     };
+
+    // Initial load
+    displayLatestResults();
 });
