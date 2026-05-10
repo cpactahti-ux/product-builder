@@ -3,27 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
+    <title>Lotto Gold Premium</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700&display=swap" rel="stylesheet">
 </head>
 <body class="dark-theme">
+    <div class="background-texture"></div>
+    
     <div class="theme-toggle">
         <button id="theme-btn" aria-label="Toggle theme">
             <span id="theme-icon">☀️</span>
         </button>
     </div>
+
     <div class="container">
         <header>
             <h1 class="glow-text">Lotto Gold</h1>
-            <p class="subtitle">Your journey to fortune starts here</p>
+            <p class="subtitle">Experience the future of fortune</p>
         </header>
-        <div class="display-card">
-            <div id="lotto-container">
-                <div class="placeholder-text">Ready for your lucky numbers?</div>
+
+        <div class="selector-card">
+            <p class="selector-label">How many sets do you need?</p>
+            <div class="segmented-control">
+                <input type="radio" name="sets" value="1" id="set-1">
+                <label for="set-1">1 Set</label>
+                
+                <input type="radio" name="sets" value="3" id="set-3" checked>
+                <label for="set-3">3 Sets</label>
+                
+                <input type="radio" name="sets" value="5" id="set-5">
+                <label for="set-5">5 Sets</label>
+                <div class="selection-slider"></div>
             </div>
         </div>
+
+        <div id="sets-wrapper">
+            <div class="placeholder-card">
+                <p>Choose your sets and reveal your luck</p>
+            </div>
+        </div>
+
         <div class="controls">
-            <button id="generate-btn" class="primary-btn">Generate Numbers</button>
+            <button id="generate-btn" class="primary-btn">
+                <span class="btn-text">Reveal Numbers</span>
+                <span class="btn-shine"></span>
+            </button>
         </div>
     </div>
     <script src="main.js"></script>

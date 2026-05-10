@@ -1,10 +1,10 @@
 const generateBtn = document.getElementById('generate-btn');
-const lottoContainer = document.getElementById('lotto-container');
+const setsWrapper = document.getElementById('sets-wrapper');
 const themeBtn = document.getElementById('theme-btn');
 const themeIcon = document.getElementById('theme-icon');
 const body = document.body;
 
-// Theme Toggle Logic
+// Theme Toggle
 themeBtn.addEventListener('click', () => {
     body.classList.toggle('dark-theme');
     const isDark = body.classList.contains('dark-theme');
@@ -22,25 +22,38 @@ function generateLottoNumbers() {
     return numbers.sort((a, b) => a - b);
 }
 
-function displayNumbers() {
-    lottoContainer.innerHTML = '';
+function createSetElement(setIndex) {
+    const setDiv = document.createElement('div');
+    setDiv.classList.add('lotto-set');
+    setDiv.style.animationDelay = `${setIndex * 0.15}s`;
+    
     const numbers = generateLottoNumbers();
-
-    numbers.forEach((number, index) => {
+    numbers.forEach((num, numIndex) => {
         const ball = document.createElement('div');
         ball.classList.add('ball');
-        ball.textContent = number;
-        // Staggered animation effect
-        ball.style.animationDelay = `${index * 0.1}s`;
-        lottoContainer.appendChild(ball);
+        ball.textContent = num;
+        ball.style.animationDelay = `${(setIndex * 0.15) + (numIndex * 0.08)}s`;
+        setDiv.appendChild(ball);
     });
+    
+    return setDiv;
+}
+
+function displaySets() {
+    const selectedSets = document.querySelector('input[name="sets"]:checked').value;
+    setsWrapper.innerHTML = '';
+    
+    for (let i = 0; i < parseInt(selectedSets); i++) {
+        const setElement = createSetElement(i);
+        setsWrapper.appendChild(setElement);
+    }
 }
 
 generateBtn.addEventListener('click', () => {
-    // Add a small bounce effect to the button when clicked
-    generateBtn.style.transform = 'scale(0.95)';
+    // Add haptic-like feedback animation
+    generateBtn.style.transform = 'scale(0.92)';
     setTimeout(() => {
         generateBtn.style.transform = '';
-        displayNumbers();
-    }, 100);
+        displaySets();
+    }, 150);
 });
