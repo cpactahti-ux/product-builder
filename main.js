@@ -25,14 +25,16 @@ function generateLottoNumbers() {
 function createSetElement(setIndex) {
     const setDiv = document.createElement('div');
     setDiv.classList.add('lotto-set');
-    setDiv.style.animationDelay = `${setIndex * 0.15}s`;
+    // Basic stagger for the set itself
+    setDiv.style.animationDelay = `${setIndex * 0.1}s`;
     
     const numbers = generateLottoNumbers();
     numbers.forEach((num, numIndex) => {
         const ball = document.createElement('div');
         ball.classList.add('ball');
         ball.textContent = num;
-        ball.style.animationDelay = `${(setIndex * 0.15) + (numIndex * 0.08)}s`;
+        // Fine-tuned stagger for each ball
+        ball.style.animationDelay = `${(setIndex * 0.15) + (numIndex * 0.05)}s`;
         setDiv.appendChild(ball);
     });
     
@@ -40,20 +42,36 @@ function createSetElement(setIndex) {
 }
 
 function displaySets() {
-    const selectedSets = document.querySelector('input[name="sets"]:checked').value;
+    // Correctly find the checked radio button
+    const radioButtons = document.getElementsByName('sets');
+    let selectedValue = "1"; // default
+    
+    for (const rb of radioButtons) {
+        if (rb.checked) {
+            selectedValue = rb.value;
+            break;
+        }
+    }
+    
+    const count = parseInt(selectedValue);
     setsWrapper.innerHTML = '';
     
-    for (let i = 0; i < parseInt(selectedSets); i++) {
+    for (let i = 0; i < count; i++) {
         const setElement = createSetElement(i);
         setsWrapper.appendChild(setElement);
     }
 }
 
 generateBtn.addEventListener('click', () => {
-    // Add haptic-like feedback animation
-    generateBtn.style.transform = 'scale(0.92)';
+    // UI Feedback: Button animation
+    generateBtn.disabled = true;
+    generateBtn.style.transform = 'scale(0.95)';
+    generateBtn.querySelector('.btn-text').textContent = 'Revealing...';
+    
     setTimeout(() => {
         generateBtn.style.transform = '';
+        generateBtn.disabled = false;
+        generateBtn.querySelector('.btn-text').textContent = 'Reveal Numbers';
         displaySets();
-    }, 150);
+    }, 300);
 });
