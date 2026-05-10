@@ -6,11 +6,25 @@
     <title>Lotto Number Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="dark-theme">
+    <div class="theme-toggle">
+        <button id="theme-btn" aria-label="Toggle theme">
+            <span id="theme-icon">☀️</span>
+        </button>
+    </div>
     <div class="container">
-        <h1>Lotto Number Generator</h1>
-        <button id="generate-btn">Generate Numbers</button>
-        <div id="lotto-container"></div>
+        <header>
+            <h1 class="glow-text">Lotto Gold</h1>
+            <p class="subtitle">Your journey to fortune starts here</p>
+        </header>
+        <div class="display-card">
+            <div id="lotto-container">
+                <div class="placeholder-text">Ready for your lucky numbers?</div>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="generate-btn" class="primary-btn">Generate Numbers</button>
+        </div>
     </div>
     <script src="main.js"></script>
 </body>

@@ -1,25 +1,153 @@
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --ball-bg: #ffffff;
+    --ball-text: #212529;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --accent: #764ba2;
+}
+
+body.dark-theme {
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    --ball-bg: #1e293b;
+    --ball-text: #f8fafc;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --accent: #3b82f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s;
+}
+
 body {
-    font-family: sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    overflow: hidden;
+    background-image: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+#theme-btn {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
 }
 
 .container {
     text-align: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    z-index: 1;
 }
 
-#generate-btn {
-    padding: 10px 20px;
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-bottom: 20px;
+header {
+    margin-bottom: 40px;
+}
+
+.glow-text {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    opacity: 0.7;
+    font-size: 1.1rem;
+}
+
+.display-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 40px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow);
+    margin-bottom: 40px;
 }
 
 #lotto-container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.placeholder-text {
+    font-style: italic;
+    opacity: 0.5;
+}
+
+.ball {
+    width: 60px;
+    height: 60px;
+    background: var(--ball-bg);
+    color: var(--ball-text);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    border: 2px solid var(--accent);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.primary-btn {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+.primary-btn:active {
+    transform: translateY(1px);
 }

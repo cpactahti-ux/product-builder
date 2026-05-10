@@ -1,42 +1,46 @@
-class LottoNumbers extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-    }
+const generateBtn = document.getElementById('generate-btn');
+const lottoContainer = document.getElementById('lotto-container');
+const themeBtn = document.getElementById('theme-btn');
+const themeIcon = document.getElementById('theme-icon');
+const body = document.body;
 
-    connectedCallback() {
-        this.render();
-    }
+// Theme Toggle Logic
+themeBtn.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    const isDark = body.classList.contains('dark-theme');
+    themeIcon.textContent = isDark ? '☀️' : '🌙';
+});
 
-    render() {
-        const numbers = this.generateLottoNumbers();
-        const style = `
-            <style>
-                .lotto-set {
-                    margin-bottom: 10px;
-                    font-size: 1.2em;
-                }
-            </style>
-        `;
-        this.shadowRoot.innerHTML = `${style}<div class="lotto-set">${numbers.join(', ')}</div>`;
-    }
-
-    generateLottoNumbers() {
-        const numbers = new Set();
-        while (numbers.size < 6) {
-            numbers.add(Math.floor(Math.random() * 45) + 1);
+function generateLottoNumbers() {
+    const numbers = [];
+    while (numbers.length < 6) {
+        const randomNumber = Math.floor(Math.random() * 45) + 1;
+        if (!numbers.includes(randomNumber)) {
+            numbers.push(randomNumber);
         }
-        return Array.from(numbers).sort((a, b) => a - b);
     }
+    return numbers.sort((a, b) => a - b);
 }
 
-customElements.define('lotto-numbers', LottoNumbers);
-
-document.getElementById('generate-btn').addEventListener('click', () => {
-    const lottoContainer = document.getElementById('lotto-container');
+function displayNumbers() {
     lottoContainer.innerHTML = '';
-    for (let i = 0; i < 5; i++) {
-        const lottoSet = document.createElement('lotto-numbers');
-        lottoContainer.appendChild(lottoSet);
-    }
+    const numbers = generateLottoNumbers();
+
+    numbers.forEach((number, index) => {
+        const ball = document.createElement('div');
+        ball.classList.add('ball');
+        ball.textContent = number;
+        // Staggered animation effect
+        ball.style.animationDelay = `${index * 0.1}s`;
+        lottoContainer.appendChild(ball);
+    });
+}
+
+generateBtn.addEventListener('click', () => {
+    // Add a small bounce effect to the button when clicked
+    generateBtn.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        generateBtn.style.transform = '';
+        displayNumbers();
+    }, 100);
 });
