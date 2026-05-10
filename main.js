@@ -5,60 +5,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeIcon = document.getElementById('theme-icon');
     const body = document.body;
 
-    if (!generateBtn || !themeBtn) {
-        console.error('Required elements not found');
-        return;
-    }
+    if (!generateBtn || !themeBtn) return;
 
-    // Theme Toggle Logic
-    themeBtn.addEventListener('click', () => {
+    // Theme Toggle
+    themeBtn.onclick = () => {
         body.classList.toggle('dark-theme');
         const isDark = body.classList.contains('dark-theme');
-        if (themeIcon) {
-            themeIcon.textContent = isDark ? '☀️' : '🌙';
-        }
-    });
+        if (themeIcon) themeIcon.textContent = isDark ? '☀️' : '🌙';
+    };
 
     function generateLottoNumbers() {
         const numbers = [];
+        // Generate 6 unique numbers
         while (numbers.length < 6) {
-            const randomNumber = Math.floor(Math.random() * 45) + 1;
-            if (!numbers.includes(randomNumber)) {
-                numbers.push(randomNumber);
-            }
+            const n = Math.floor(Math.random() * 45) + 1;
+            if (!numbers.includes(n)) numbers.push(n);
         }
-        return numbers.sort((a, b) => a - b);
+        const mainNumbers = numbers.sort((a, b) => a - b);
+        
+        // Generate 1 unique bonus number
+        let bonus;
+        do {
+            bonus = Math.floor(Math.random() * 45) + 1;
+        } while (mainNumbers.includes(bonus));
+        
+        return { main: mainNumbers, bonus: bonus };
     }
 
     function createSetElement(setIndex) {
         const setDiv = document.createElement('div');
-        setDiv.classList.add('lotto-set');
-        setDiv.style.animationDelay = `${setIndex * 0.1}s`;
+        setDiv.className = 'lotto-set';
+        setDiv.style.animationDelay = (setIndex * 0.1) + 's';
         
-        const numbers = generateLottoNumbers();
-        numbers.forEach((num, numIndex) => {
+        const result = generateLottoNumbers();
+        const main = result.main;
+        const bonus = result.bonus;
+        
+        // Render Main Numbers
+        main.forEach((num, idx) => {
             const ball = document.createElement('div');
-            ball.classList.add('ball');
+            ball.className = 'ball';
             ball.textContent = num;
-            ball.style.animationDelay = `${(setIndex * 0.15) + (numIndex * 0.05)}s`;
+            ball.style.animationDelay = ((setIndex * 0.1) + (idx * 0.05)) + 's';
             setDiv.appendChild(ball);
         });
+
+        // Add Plus Sign
+        const plus = document.createElement('div');
+        plus.className = 'plus-sign';
+        plus.textContent = '+';
+        setDiv.appendChild(plus);
+
+        // Render Bonus Number
+        const bonusBall = document.createElement('div');
+        bonusBall.className = 'ball bonus';
+        bonusBall.textContent = bonus;
+        bonusBall.style.animationDelay = ((setIndex * 0.1) + (6 * 0.05)) + 's';
+        setDiv.appendChild(bonusBall);
         
         return setDiv;
     }
 
     function displaySets() {
-        const radioButtons = document.getElementsByName('sets');
-        let selectedValue = "3"; // fallback
-        
-        for (const rb of radioButtons) {
-            if (rb.checked) {
-                selectedValue = rb.value;
+        const radios = document.getElementsByName('sets');
+        let count = 3;
+        for (const r of radios) {
+            if (r.checked) {
+                count = parseInt(r.value);
                 break;
             }
         }
         
-        const count = parseInt(selectedValue);
         if (setsWrapper) {
             setsWrapper.innerHTML = '';
             for (let i = 0; i < count; i++) {
@@ -67,15 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    generateBtn.addEventListener('click', () => {
-        generateBtn.style.transform = 'scale(0.95)';
+    generateBtn.onclick = () => {
         const btnText = generateBtn.querySelector('.btn-text');
         if (btnText) btnText.textContent = 'Revealing...';
         
         setTimeout(() => {
-            generateBtn.style.transform = '';
             if (btnText) btnText.textContent = 'Reveal Numbers';
             displaySets();
         }, 200);
-    });
+    };
 });
